@@ -1,38 +1,18 @@
 <template>
-  <div id="app">
-    <mapVue  :center="center" />
-  </div>
+    <Map/>
 </template>
 
+
 <script>
-import mapVue from '../components/mapVue'
+import Map from '../components/map.vue'
+
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    mapVue
-    // Remove the HelloWorld.vue 
-  },
-  data() {
-return {
-    // we are this as prop to the mapVue component 
-  center:{ 
-    lat: 40.730610, 
-    lng: -73.935242
-    }
-}
-  
+    Map
   }
 }
-
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
