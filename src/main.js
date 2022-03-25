@@ -5,10 +5,10 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.prototype.$apiWeb = axios.create({
-
-    baseURL: 'http://api.reunionou.app:19180/',
+    baseURL: 'http://api.reunionou.local:19180/',
     params: {},
-    headers: { "X-Requested-With": "XMLHttpRequest", }
+    // headers: { "X-Requested-With": "XMLHttpRequest", },
+    withCredentials: true,
 })
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false

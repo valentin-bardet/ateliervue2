@@ -1,6 +1,9 @@
 <template>
   <div class="mypage">
     <h1>This is The Page</h1>
+    <p>Nom :{{user.nom}}</p>
+    <p>Prenom :{{user.prenom}}</p>
+    <p>Mail :{{user.mail}}</p>
   </div>
 </template>
 <script>
@@ -14,13 +17,12 @@ export default {
   },
   methods: {
     load() {
-      this.axios
+      this.$apiWeb
         .get(
-          "http://api.reunionou.app:19180/myPage/?token=4c252d21a886af0c69ca6180f5dcb7994d297a39d70c8b9940879b3a45b3257a"
+          "myPage/?token=4c252d21a886af0c69ca6180f5dcb7994d297a39d70c8b9940879b3a45b3257a"
         )
-        .then((response) => {
-          console.log(response.data);
-        });
+        .then((response) => (this.user = response["data"][0]))
+        .catch((error) => console.log(error.response));
     },
   },
   created() {
