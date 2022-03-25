@@ -1,6 +1,6 @@
 <template>
   <div class="mypage">
-    <h1>This is The Page</h1>
+    <h1>This is Your Page</h1>
     <p>Nom :{{user.nom}}</p>
     <p>Prenom :{{user.prenom}}</p>
     <p>Mail :{{user.mail}}</p>
