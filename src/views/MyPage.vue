@@ -4,7 +4,14 @@
     <p>Nom :{{user.nom}}</p>
     <p>Prenom :{{user.prenom}}</p>
     <p>Mail :{{user.mail}}</p>
+
+
+    <div class="buttons">
+    <b-button type="is-primary">Primary</b-button>
+    <button class="button is-danger">Danger</button>
   </div>
+  </div>
+  
 </template>
 <script>
 export default {
