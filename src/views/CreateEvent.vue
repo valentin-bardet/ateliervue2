@@ -119,6 +119,7 @@ export default {
         .catch((error) => console.log(error.response.data.message));
     },
     newEvent() {
+      this.loading = true;
       this.$apiWeb
         .post("postEvent/?token=" + this.token, {
           lat: this.lat,
@@ -129,7 +130,6 @@ export default {
           date: this.date,
         })
         .then((response) => {
-          this.loading = true;
           this.event = response.data;
           this.loading = false;
           this.$router.push("/Myevent/" + this.event.id);

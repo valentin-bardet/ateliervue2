@@ -2,7 +2,7 @@
   <l-map
     :center="center"
     :zoom="zoom"
-    class="map"
+    id="map"
     ref="map"
     @update:zoom="zoomUpdated"
     @update:center="centerUpdated"
@@ -21,11 +21,9 @@
 </template>
 
 <script>
-
 import { LMap, LTileLayer } from "vue2-leaflet";
 import Restaurant from "./restaurant";
 import "leaflet/dist/leaflet.css";
-
 
 export default {
   components: {
@@ -42,11 +40,12 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       center: [this.lat, this.long],
       zoom: 12,
+      latitude: 0,
+      longitude: 0,
       markers: [
         {
           id: 1,
-          imageUrl:
-            "https://www.pngfind.com/pngs/m/671-6710560_blue-map-marker-png-transparent-png.png",
+          imageUrl: "https://img.icons8.com/android/344/marker.png",
           coordinates: [this.lat, this.long],
         },
       ],
@@ -59,6 +58,27 @@ export default {
     centerUpdated(center) {
       this.center = center;
     },
+    location() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.markers = [
+          {
+            id: 1,
+            imageUrl: "https://img.icons8.com/android/344/marker.png",
+            coordinates: [this.lat, this.long],
+          },
+          {
+            id: 2,
+            imageUrl: "https://img.icons8.com/android/344/marker.png",
+            coordinates: [this.latitude, this.longitude],
+          },
+        ];
+      });
+    },
+  },
+  created: function () {
+    this.location();
   },
 };
 </script>
@@ -67,11 +87,10 @@ export default {
 * {
   margin: 0;
 }
-.map {
+#map {
   position: absolute;
-  width: 100%;
-  height: 200px;
+  width: 50vw;
+  height: 50vh;
   overflow: hidden;
 }
-
 </style>

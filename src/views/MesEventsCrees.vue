@@ -4,8 +4,8 @@
     <div v-if="!AuthError">
       <h1>Yours created events</h1>
       <div v-if="loaded">
-        <div v-for="envent in events">
-          <router-link :to="`/Myevent/${envent.id}`">{{envent.libelle_event}}</router-link>
+        <div v-for="event in events">
+          <router-link :to="`/Myevent/${event.id}`">{{event.libelle_event}}</router-link>
         </div>
 
       </div>
