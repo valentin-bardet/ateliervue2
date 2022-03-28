@@ -7,9 +7,9 @@
     @update:zoom="zoomUpdated"
     @update:center="centerUpdated"
   >
-    <l-tile-layer
-      :url="url"
-    >
+
+    <l-tile-layer :url="url">
+
     </l-tile-layer>
     <restaurant
       v-for="marker in markers"
@@ -21,46 +21,57 @@
 </template>
 
 <script>
-import { LMap, LTileLayer } from 'vue2-leaflet';
-import Restaurant from './restaurant'
-import 'leaflet/dist/leaflet.css';
+
+import { LMap, LTileLayer } from "vue2-leaflet";
+import Restaurant from "./restaurant";
+import "leaflet/dist/leaflet.css";
+
 
 export default {
   components: {
     LMap,
     LTileLayer,
-    Restaurant
+    Restaurant,
   },
-  data () {
+  props: {
+    lat: String,
+    long: String,
+  },
+  data() {
     return {
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      center: [ 49.1193089, 6.1757156 ],
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      center: [this.lat, this.long],
       zoom: 12,
       markers: [
-        {id: 1, imageUrl: 'https://img.icons8.com/doodle/48/000000/fish-food--v1.png', coordinates: [ 49.114910, 6.178810 ]},
-        {id: 2, imageUrl: 'https://img.icons8.com/doodle/48/000000/pizza--v1.png' ,coordinates: [ 49.133290, 6.154370 ]},
-        {id: 3, imageUrl: 'https://img.icons8.com/doodle/48/000000/croissant--v1.png', coordinates: [ 49.102160, 6.158850 ]},
-        {id: 4, imageUrl: 'https://img.icons8.com/doodle/48/000000/the-toast--v2.png', coordinates: [ 49.136010, 6.199630 ]},
-        {id: 5, imageUrl: 'https://img.icons8.com/doodle/48/000000/hamburger.png', coordinates: [ 49.105563, 6.182234 ]},
-      ]
-    }
+        {
+          id: 1,
+          imageUrl:
+            "https://www.pngfind.com/pngs/m/671-6710560_blue-map-marker-png-transparent-png.png",
+          coordinates: [this.lat, this.long],
+        },
+      ],
+    };
   },
   methods: {
-    zoomUpdated (zoom) {
+    zoomUpdated(zoom) {
       this.zoom = zoom;
     },
-    centerUpdated (center) {
+    centerUpdated(center) {
       this.center = center;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-  .map {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow :hidden
-  }
+* {
+  margin: 0;
+}
+.map {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
 </style>

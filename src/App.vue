@@ -3,11 +3,27 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/Mypage">Mypage</router-link>
+      <router-link to="/Mypage">Mypage</router-link> |
+      <router-link to="/MesEventsCrees">Mes events crees</router-link> |
+      <router-link to="/CreateEvent">CreateEvent</router-link> |
+      <router-link to="/login">Login</router-link> |
+      <button @click="logout">Logout</button>
+
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.state.token = null;
+      this.$router.push("/login");
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {

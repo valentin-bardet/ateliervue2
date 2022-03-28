@@ -7,9 +7,13 @@ import VueAxios from 'vue-axios'
 Vue.prototype.$apiWeb = axios.create({
     baseURL: 'http://api.reunionou.local:19180/',
     params: {},
-    // headers: { "X-Requested-With": "XMLHttpRequest", },
     withCredentials: true,
 })
+Vue.prototype.$apiAuth = axios.create({
+    baseURL: 'http://api.reunionou.auth:19480/',
+    params: {},
+})
+
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 

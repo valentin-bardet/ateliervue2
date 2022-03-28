@@ -23,13 +23,47 @@ const routes = [{
         }
     },
     {
-        path: '/Mypage',
+        path: '/mypage',
         name: 'Mypage',
-
         component: function() {
             return import ( /* webpackChunkName: "about" */ '../views/MyPage.vue')
         }
-    }
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: function() {
+            return import ( /* webpackChunkName: "about" */ '../views/Login.vue')
+        }
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: function() {
+            return import ( /* webpackChunkName: "about" */ '../views/Register.vue')
+        }
+    },
+    {
+        path: '/MesEventsCrees',
+        name: 'MesEventsCrees',
+        component: function() {
+            return import ( /* webpackChunkName: "about" */ '../views/MesEventsCrees.vue')
+        }
+    },
+    {
+        path: '/CreateEvent',
+        name: 'CreateEvent',
+        component: function() {
+            return import ( /* webpackChunkName: "about" */ '../views/CreateEvent.vue')
+        }
+    },
+    {
+        path: '/Myevent/:idevent',
+        name: 'Myevent',
+
+        component: () =>
+            import ('../views/Myevent.vue')
+    },
 ]
 
 const router = new VueRouter({
