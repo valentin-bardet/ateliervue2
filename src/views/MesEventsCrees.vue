@@ -1,11 +1,15 @@
 <template>
-  <div class="mypage">
+  <div class="mesEventsCrees">
     <p>{{AuthError}}</p>
     <div v-if="!AuthError">
-      <h1>This is Your Page</h1>
-      <p>Nom :{{user.nom}}</p>
-      <p>Prenom :{{user.prenom}}</p>
-      <p>Mail :{{user.mail}}</p>
+      <h1>Yours created events</h1>
+      <div v-if="loaded">
+        <div v-for="envent in events">
+          <router-link :to="`/Myevent/${envent.id}`">{{envent.libelle_event}}</router-link>
+        </div>
+
+      </div>
+
       <img
         v-if="loading"
         src="../assets/loader.gif"
@@ -17,15 +21,17 @@
 </template>
 <script>
 export default {
-  name: "Mypage",
+  name: "MesEventsCrees",
   components: {},
   data() {
     return {
+      loaded: false,
       AuthError: null,
-      user: [],
+      events: [],
       token: this.$store.state.token,
       access_token: this.$store.state.access_token,
       loading: false,
+      success: false,
     };
   },
   methods: {
@@ -38,14 +44,23 @@ export default {
           this.loading = true;
           this.$store.commit("setUser", response.data);
           this.UpdateState();
-          this.user = this.$store.state.user;
-          this.loading = false;
+          this.load();
         })
         .catch((error) => (this.AuthError = error.response.data.message));
     },
     UpdateState() {
       this.$apiWeb
         .post("lastConnection/?token=" + this.token)
+        .catch((error) => console.log(error.response.data.message));
+    },
+    load() {
+      this.$apiWeb
+        .get("myEvents/?token=" + this.token)
+        .then((response) => {
+          this.events = response.data.events;
+          this.loading = false;
+          this.loaded = true;
+        })
         .catch((error) => console.log(error.response.data.message));
     },
   },
