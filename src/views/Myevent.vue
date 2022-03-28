@@ -11,10 +11,16 @@
         <p><b>Id du createur:</b> {{event.createur_id}}</p>
         <p><b>Date:</b> {{event.date}}</p>
         <p><b>Heure:</b> {{event.horaire}}</p>
+
         <Map
+          style="max-width=400px"
           :lat="event.lat"
           :long="event.long"
         />
+        <div class="right">
+          <Conversation :id="event.id" />
+
+        </div>
       </div>
 
       <img
@@ -28,11 +34,13 @@
   </div>
 </template>
 <script>
-import Map from "../components/map.vue";
+import Map from "@/components/map.vue";
+import Conversation from "@/components/conversation.vue";
 export default {
   name: "MyEvent",
   components: {
     Map,
+    Conversation,
   },
   data() {
     return {
@@ -82,3 +90,10 @@ export default {
   },
 };
 </script>
+
+<style lang='scss' scoped>
+.right {
+  position: absolute;
+  right: 0;
+}
+</style>

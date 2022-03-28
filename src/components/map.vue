@@ -2,7 +2,7 @@
   <l-map
     :center="center"
     :zoom="zoom"
-    class="map"
+    id="map"
     ref="map"
     @update:zoom="zoomUpdated"
     @update:center="centerUpdated"
@@ -21,11 +21,9 @@
 </template>
 
 <script>
-
 import { LMap, LTileLayer } from "vue2-leaflet";
 import Restaurant from "./restaurant";
 import "leaflet/dist/leaflet.css";
-
 
 export default {
   components: {
@@ -67,11 +65,10 @@ export default {
 * {
   margin: 0;
 }
-.map {
+#map {
   position: absolute;
-  width: 100%;
+  width: 400px;
   height: 200px;
   overflow: hidden;
 }
-
 </style>
