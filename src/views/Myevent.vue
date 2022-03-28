@@ -9,7 +9,7 @@
         <p><b>Latitude :</b> {{event.lat}}</p>
         <p><b>Longitude:</b> {{event.long}}</p>
         <p><b>Id du createur:</b> {{event.createur_id}}</p>
-        <p><b>Date:</b> {{event.dateg}}</p>
+        <p><b>Date:</b> {{event.date}}</p>
         <p><b>Heure:</b> {{event.horaire}}</p>
         <h2><b>Participants</b></h2>
         <div v-for="user in participants">
