@@ -10,7 +10,7 @@
       <button @click="logout">Logout</button>
 
     </div>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 

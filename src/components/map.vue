@@ -7,7 +7,9 @@
     @update:zoom="zoomUpdated"
     @update:center="centerUpdated"
   >
+
     <l-tile-layer :url="url">
+
     </l-tile-layer>
     <restaurant
       v-for="marker in markers"
@@ -19,9 +21,11 @@
 </template>
 
 <script>
+
 import { LMap, LTileLayer } from "vue2-leaflet";
 import Restaurant from "./restaurant";
 import "leaflet/dist/leaflet.css";
+
 
 export default {
   components: {
@@ -69,4 +73,5 @@ export default {
   height: 200px;
   overflow: hidden;
 }
+
 </style>
