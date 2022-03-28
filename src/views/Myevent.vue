@@ -11,7 +11,10 @@
         <p><b>Id du createur:</b> {{event.createur_id}}</p>
         <p><b>Date:</b> {{event.date}}</p>
         <p><b>Heure:</b> {{event.horaire}}</p>
-
+        <h2><b>Participants</b></h2>
+        <div v-for="user in participants">
+          <p>{{user.nom}} {{user.prenom}}</p>
+        </div>
         <Map
           style="max-width=400px"
           :lat="event.lat"
