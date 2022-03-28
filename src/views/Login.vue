@@ -1,34 +1,27 @@
 <template>
-  <div class="login">
-    <h1>Login</h1>
+  <div id="bc" class="login box column is-half is-offset-one-quarter mt-6">
     <form @submit.prevent="auth">
-      <h1>Connectez-vous</h1>
-      <div>
+      <h1 class="title is-4 has-text-centered">Login</h1>
 
-        <input
-          type="email"
-          required
-          v-model="email"
-        >
-      </div>
-      <div>
+      <b-field label="mail :">
+        <b-input type="email" maxlength="30" v-model="email" required>
+        </b-input>
+      </b-field>
 
-        <input
-          type="password"
-          required
-          v-model="password"
-        >
-      </div>
-      <div>
-        <button>
-          <h3>
-            Valider
-          </h3>
-        </button>
-      </div>
-      <p>{{error}}</p>
-      <router-link to="/register">Pas encore de compte ?</router-link>
+      <b-field label="Password :">
+        <b-input type="password" v-model="password" required> </b-input>
+      </b-field>
 
+      <div>
+        <div class="has-text-centered mt-5 mb-3">
+          <button class="button" type="is-success" id="Valider">
+            valid
+            </button>
+         
+        </div>
+      </div>
+      <p>{{ error }}</p>
+      <router-link to="/register">No account yet?</router-link>
     </form>
   </div>
 </template>
@@ -67,3 +60,19 @@ export default {
   created() {},
 };
 </script>
+
+<style scoped>
+
+.title{
+  color:#48C78E;
+}
+#Valider {
+  border: 1px solid #48C78E;
+  background-color: #48C78E;
+  color: white;
+}
+#Valider:hover {
+  background-color: white;
+  color: black;
+}
+</style>

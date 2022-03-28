@@ -4,13 +4,17 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
+
+Vue.use(Buefy)
 Vue.prototype.$apiWeb = axios.create({
-    baseURL: 'http://api.reunionou.local:19180/',
+    baseURL: 'http://149.91.80.75:19180/',
     params: {},
     withCredentials: true,
 })
 Vue.prototype.$apiAuth = axios.create({
-    baseURL: 'http://api.reunionou.auth:19480/',
+    baseURL: 'http://149.91.80.75:19480/',
     params: {},
 })
 
