@@ -9,39 +9,37 @@
         v-if="success"
       >
         <div>
-          <label>Lattitude</label>
-          <input
-            type="text"
-            required
-            v-model="lat"
-          >
-        </div>
-        <div>
-          <label>Longitude</label>
-          <input
-            type="text"
-            required
-            v-model="long"
-          >
-        </div>
-        <div>
-          <label>Nom Event</label>
+          <label><i class="las la-tag"></i>Nom Event</label>
           <input
             type="text"
             required
             v-model="libelle_event"
           >
         </div>
-        <div>
-          <label>Nom Lieu</label>
+        <div id="app-autocomplete-here">
+          <label><i class="las la-map-marker-alt"></i></label>
           <input
             type="text"
-            required
             v-model="libelle_lieu"
+            placeholder="Adress"
+            v-on:keyup="onKeypressCity($event)"
+            v-on:keydown="onKeypressCity($event)"
           >
+          <!-- LISTING : SUGGESTIONS HERE -->
+          <div
+            class="autocomplete-here-suggestions-container"
+            v-if="suggestionsHere.length > 0"
+          >
+            <ul>
+              <li v-for="suggestion in suggestionsHere">
+                <span v-on:click="onClickSuggestHere(suggestion)">{{ suggestion.lib }}</span>
+              </li>
+            </ul>
+          </div>
+
         </div>
         <div>
-          <label>Heure</label>
+          <label><i class="las la-clock"></i></label>
           <input
             type="time"
             required
@@ -49,7 +47,7 @@
           >
         </div>
         <div>
-          <label>Date</label>
+          <label><i class="las la-calendar-alt"></i></label>
           <input
             type="date"
             required
@@ -67,6 +65,7 @@
         <p>{{error}}</p>
 
       </form>
+
       <img
         v-if="loading"
         src="../assets/loader.gif"
@@ -82,22 +81,30 @@ export default {
   components: {},
   data() {
     return {
+      // Valeur du champ 'Ville'
+      suggestionsHere: [], // Tableau qui contiendra les suggestions Here
+      suggestionSelected: "", // Ville & Code postal sélectionnés
       success: false,
       AuthError: null,
       error: null,
       token: this.$store.state.token,
       access_token: this.$store.state.access_token,
       loading: false,
-      lat: "46.702246",
-      long: "7.703246",
+      lat: null,
+      long: null,
       libelle_event: null,
       libelle_lieu: null,
       horaire: null,
       date: null,
       event: null,
+      currentFocus: -1,
+      fetchTrigger: 0,
     };
   },
   methods: {
+    envoi() {
+      console.log("oui");
+    },
     checkAuth() {
       this.$apiAuth
         .get("check", {
@@ -141,9 +148,56 @@ export default {
           )
         );
     },
+    onKeypressCity(e) {
+      var value = this.libelle_lieu;
+
+      if (value != undefined && value != "") {
+        // Call API Suggestions de HERE pour réécupérer les informations
+        fetch(
+          `https://api-adresse.data.gouv.fr/search/?q=${value}&limit=7&autocomplete=1`
+        )
+          .then((result) => result.json())
+          .then(
+            (result) => {
+              var datas = [];
+              if (result.features && result.features.length > 0) {
+                result.features.map(function (sug) {
+                  if (
+                    sug.properties.label != undefined &&
+                    sug.geometry.coordinates != undefined
+                  )
+                    console.log("coordonés" + sug.geometry.coordinates[1]);
+                  datas.push({
+                    lib: sug.properties.label,
+                    lat: sug.geometry.coordinates[0],
+                    long: sug.geometry.coordinates[1],
+                  });
+                });
+
+                this.suggestionsHere = datas;
+              }
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+      } else {
+        this.suggestionsHere = [];
+      }
+    },
+    onClickSuggestHere(suggestion) {
+      // On renseigne la ville sélectionner
+      this.suggestionSelected = suggestion.lib;
+      this.lat = suggestion.long;
+      this.long = suggestion.lat;
+      this.libelle_lieu = suggestion.lib;
+
+      this.suggestionsHere = [];
+    },
   },
   created() {
     this.checkAuth();
   },
 };
 </script>
+
