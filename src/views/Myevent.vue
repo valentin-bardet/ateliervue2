@@ -3,18 +3,23 @@
     <p>{{AuthError}}</p>
     <div v-if="!AuthError">
       <div v-if="loaded">
-        <h1>This is Your Event Page</h1>
-        <p><b>Nom Evenement :</b> {{event.libelle_event}}</p>
-        <p><b>Nom Lieu :</b> {{event.libelle_lieu}}</p>
-        <p><b>Latitude :</b> {{event.lat}}</p>
-        <p><b>Longitude:</b> {{event.long}}</p>
-        <p><b>Id du createur:</b> {{event.createur_id}}</p>
-        <p><b>Date:</b> {{event.date}}</p>
-        <p><b>Heure:</b> {{event.horaire}}</p>
-        <h2><b>Participants</b></h2>
-        <div v-for="user in participants">
-          <p>{{user.nom}} {{user.prenom}}</p>
-        </div>
+        <section>
+          <div id="infos">
+            <h1>{{event.libelle_event}}</h1>
+            <!-- <p><b>Latitude :</b> {{event.lat}}</p> -->
+            <!-- <p><b>Longitude:</b> {{event.long}}</p> -->
+            <!-- <p><b>Id du createur:</b> {{event.createur_id}}</p> -->
+            <p><i class="las la-calendar-alt"></i>{{event.date}} <b>{{event.horaire}}</b></p>
+            <p><i class="las la-map-marker-alt"></i> {{event.libelle_lieu}}</p>
+          </div>
+          <div id="participants">
+            <h2><b>Participants</b></h2>
+            <div v-for="user in participants">
+              <p>{{user.nom}} {{user.prenom}}</p>
+            </div>
+          </div>
+        </section>
+
         <Map
           style="max-width=400px"
           :lat="event.lat"
@@ -81,6 +86,7 @@ export default {
         .get(`myEvent/${this.id}?token=` + this.token)
         .then((response) => {
           this.event = response.data.infos[0];
+          this.event.horaire = this.event.horaire.slice(0, -3);
           this.participants = response.data.users;
           this.loading = false;
           this.loaded = true;
@@ -98,5 +104,38 @@ export default {
 .right {
   position: absolute;
   right: 0;
+}
+.MyEvent {
+  padding: 2em;
+}
+section {
+  display: flex;
+  justify-content: center;
+  #infos {
+    width: 50vw;
+    text-align: left;
+    padding-right: 2em;
+    h1 {
+      font-weight: bold;
+      font-size: 1.7em;
+      margin-bottom: 0.6em;
+    }
+    i {
+      font-size: 50px;
+      padding-right: 0.5em;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 1.4em;
+      margin-bottom: 1em;
+      b {
+        padding-left: 1em;
+      }
+    }
+  }
+  #participants {
+    width: 50vw;
+  }
 }
 </style>
