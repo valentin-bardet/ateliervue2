@@ -140,7 +140,11 @@ export default {
       this.$apiWeb
         .get(`getUsersInviteNonRefuse/${this.id}/?token=` + this.token)
         .then((response) => {
-          this.invites = response.data;
+          if (response.data !== "rien") {
+            this.invites = response.data;
+          } else {
+            this.invites = false;
+          }
         })
         .catch((error) => (this.error = error.response.data.message));
     },

@@ -166,12 +166,11 @@ export default {
                     sug.properties.label != undefined &&
                     sug.geometry.coordinates != undefined
                   )
-                    console.log("coordonés" + sug.geometry.coordinates[1]);
-                  datas.push({
-                    lib: sug.properties.label,
-                    lat: sug.geometry.coordinates[0],
-                    long: sug.geometry.coordinates[1],
-                  });
+                    datas.push({
+                      lib: sug.properties.label,
+                      lat: sug.geometry.coordinates[0],
+                      long: sug.geometry.coordinates[1],
+                    });
                 });
 
                 this.suggestionsHere = datas;
