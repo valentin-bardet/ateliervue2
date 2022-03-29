@@ -26,6 +26,9 @@
               <article v-for='invite in invites.users'>
                 {{invite.prenom}} {{invite.nom}} <button>Deja invite</button>
               </article>
+              <article v-for='non in refus'>
+                {{non.prenom}} {{non.nom}} <button>Refusé</button>
+              </article>
 
             </div>
           </div>
@@ -75,6 +78,7 @@ export default {
       users: null,
       noninvites: null,
       invites: null,
+      refus: null,
     };
   },
   methods: {
@@ -107,18 +111,7 @@ export default {
           this.loaded = true;
         })
         .catch((error) => (this.error = error.response.data.message));
-      this.$apiWeb
-        .get(`getUsersInvite/${this.id}/?token=` + this.token)
-        .then((response) => {
-          this.invites = response.data;
-        })
-        .catch((error) => (this.error = error.response.data.message));
-      this.$apiWeb
-        .get(`getUsersNonInvite/${this.id}/?token=` + this.token)
-        .then((response) => {
-          this.noninvites = response.data.users;
-        })
-        .catch((error) => (this.error = error.response.data.message));
+      this.invitationUsers();
     },
     ouvrirInviter() {
       this.inviter = !this.inviter;
@@ -127,18 +120,27 @@ export default {
       this.$apiWeb
         .post(`invitation/${this.id}/?token=${this.token}&id_user=${id}`)
         .then((response) => {
-          this.$apiWeb
-            .get(`getUsersInvite/${this.id}/?token=` + this.token)
-            .then((response) => {
-              this.invites = response.data;
-            })
-            .catch((error) => (this.error = error.response.data.message));
-          this.$apiWeb
-            .get(`getUsersNonInvite/${this.id}/?token=` + this.token)
-            .then((response) => {
-              this.noninvites = response.data.users;
-            })
-            .catch((error) => (this.error = error.response.data.message));
+          this.invitationUsers();
+        })
+        .catch((error) => (this.error = error.response.data.message));
+    },
+    invitationUsers() {
+      this.$apiWeb
+        .get(`NeparticipePas/${this.id}/?token=` + this.token)
+        .then((response) => {
+          this.refus = response.data.users;
+        })
+        .catch((error) => (this.error = error.response.data.message));
+      this.$apiWeb
+        .get(`getUsersNonInvite/${this.id}/?token=` + this.token)
+        .then((response) => {
+          this.noninvites = response.data.users;
+        })
+        .catch((error) => (this.error = error.response.data.message));
+      this.$apiWeb
+        .get(`getUsersInviteNonRefuse/${this.id}/?token=` + this.token)
+        .then((response) => {
+          this.invites = response.data;
         })
         .catch((error) => (this.error = error.response.data.message));
     },
