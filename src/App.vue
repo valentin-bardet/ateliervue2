@@ -24,7 +24,9 @@
 
       <template #end >
         <b-navbar-item tag="div">
-        <p v-if="$store.state.token">Connecté en tant que <strong>{{ $store.state.user.prenom }}</strong></p>
+        <div v-if="$store.state.token">
+          <img id="avatar" :src="`https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` + $store.state.user.prenom + '&size=350'" alt="Avatar"/>
+        </div>
         </b-navbar-item>
         <b-navbar-item tag="div">
           <div class="buttons" v-if="!$store.state.token">
@@ -105,6 +107,9 @@ export default {
 </script>
 
 <style lang="scss">
+#avatar{
+  width: 100px;
+}
 #CreationCompte{
   margin-right: 30px;
 }
