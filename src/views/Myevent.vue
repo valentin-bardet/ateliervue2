@@ -17,6 +17,17 @@
             <div v-for="user in participants">
               <p>{{user.nom}} {{user.prenom}}</p>
             </div>
+            <button @click="ouvrirInviter">Inviter plus de monde</button>
+            <div v-if="inviter">
+              <article v-for='noninvite in noninvites'>
+                {{noninvite.prenom}} {{noninvite.nom}}<button @click='inviteSomeone(noninvite.id)'>invite</button>
+              </article>
+
+              <article v-for='invite in invites.users'>
+                {{invite.prenom}} {{invite.nom}} <button>Deja invite</button>
+              </article>
+
+            </div>
           </div>
         </section>
 
@@ -60,6 +71,10 @@ export default {
       participants: [],
       loading: false,
       loaded: false,
+      inviter: false,
+      users: null,
+      noninvites: null,
+      invites: null,
     };
   },
   methods: {
@@ -90,6 +105,40 @@ export default {
           this.participants = response.data.users;
           this.loading = false;
           this.loaded = true;
+        })
+        .catch((error) => (this.error = error.response.data.message));
+      this.$apiWeb
+        .get(`getUsersInvite/${this.id}/?token=` + this.token)
+        .then((response) => {
+          this.invites = response.data;
+        })
+        .catch((error) => (this.error = error.response.data.message));
+      this.$apiWeb
+        .get(`getUsersNonInvite/${this.id}/?token=` + this.token)
+        .then((response) => {
+          this.noninvites = response.data.users;
+        })
+        .catch((error) => (this.error = error.response.data.message));
+    },
+    ouvrirInviter() {
+      this.inviter = !this.inviter;
+    },
+    inviteSomeone(id) {
+      this.$apiWeb
+        .post(`invitation/${this.id}/?token=${this.token}&id_user=${id}`)
+        .then((response) => {
+          this.$apiWeb
+            .get(`getUsersInvite/${this.id}/?token=` + this.token)
+            .then((response) => {
+              this.invites = response.data;
+            })
+            .catch((error) => (this.error = error.response.data.message));
+          this.$apiWeb
+            .get(`getUsersNonInvite/${this.id}/?token=` + this.token)
+            .then((response) => {
+              this.noninvites = response.data.users;
+            })
+            .catch((error) => (this.error = error.response.data.message));
         })
         .catch((error) => (this.error = error.response.data.message));
     },
