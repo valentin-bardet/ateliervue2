@@ -34,9 +34,17 @@
         </b-navbar-item>
       </template>
 
-      <template #end>
-        <b-navbar-item tag="div">
-          <p v-if="$store.state.token">Connecté en tant que <strong>{{ $store.state.user.prenom }}</strong></p>
+      <template #end >
+        <b-navbar-item tag="router-link" :to="{ path: '/userProfil' }">
+        <div v-if="$store.state.token">
+          <b-navbar-item id="avatarC" >
+            <img
+               id="avatar" :src="`https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` + $store.state.user.prenom +'&size=500'" alt="Avatar"/>
+              
+        </b-navbar-item>
+          
+        </div>
+
         </b-navbar-item>
         <b-navbar-item tag="div">
           <div
@@ -68,29 +76,14 @@
 
     <router-view />
   </div>
-  <!-- <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/Mypage">Mypage</router-link> |
-      <router-link to="/MesEventsCrees">Mes events crees</router-link> |
-      <router-link to="/CreateEvent">CreateEvent</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <button @click="logout">Logout</button>
-      
-
-    </div>
-    <router-view/>
-
-    
-  </div> -->
-
 </template>
 
 <script>
 export default {
   methods: {
-    deconnexion() {
+
+    deconnexion(){
+
       this.$store.state.token = null;
       this.$router.push("/login");
     },
@@ -99,7 +92,20 @@ export default {
 </script>
 
 <style lang="scss">
-#CreationCompte {
+
+#avatarC{
+  
+  width: 100px;
+  height: 50px;
+}
+#avatar{
+  
+  width: 100%;
+  height:100%;
+}
+
+#CreationCompte{
+
   margin-right: 30px;
 }
 

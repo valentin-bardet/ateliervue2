@@ -29,6 +29,14 @@ const routes = [{
             return import ( /* webpackChunkName: "about" */ '../views/MyPage.vue')
         }
     },
+
+    {
+        path: '/userProfil',
+        name: 'UserProfil',
+        component: function() {
+            return import ( /* webpackChunkName: "about" */ '../views/UserProfil.vue')
+        }
+    },
     {
         path: '/login',
         name: 'Login',
