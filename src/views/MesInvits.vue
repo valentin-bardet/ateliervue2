@@ -33,8 +33,8 @@
                   <strong>{{ event.date }}</strong>
                   <p>{{ event.horaire }}</p>
                 </div>
-                <button @click="viens(event.id)">Accept</button>
-                <button @click="viensPas(event.id)">Deny</button>
+                <button class="button is-success is-light" @click="viens(event.id)">Accept</button>
+                <button class="button is-danger is-light" @click="viensPas(event.id)">Deny</button>
               </div>
 
             </div>
@@ -121,6 +121,11 @@ export default {
 
 
 <style scoped>
+
+.is-danger{
+  margin-left: 15px;
+}
+
 #libelle {
   color: #188fa7;
   text-decoration: none;

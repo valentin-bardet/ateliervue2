@@ -5,48 +5,49 @@
       <h1 class="title">Your events</h1>
       <div v-if="loaded">
         <div v-for="event in events">
-          <p><b>Created by {{ event.creator.prenom }} {{ event.creator.nom }}</b></p>
-          <div class="container is-vcentered ">
-            <div
-              id="info-container"
-              class="notification is-white is-vcentered "
-            >
+          <div class="container is-vcentered">
+            <div id="info-container" class="notification is-white is-vcentered">
               <div class="columns is-vcentered efefefefef">
-                <div
-                  id="libelleC"
-                  class="column is-half"
-                >
-                  <router-link
-                    :to="`/Event/${event.id}`"
-                    id="lien"
-                  >
-                    <p
-                      id="libelle"
-                      class="is-vcentered title is-5"
-                    >
-                      {{ event.libelle_event }} at <b>{{ event.libelle_lieu }}</b>
+                <div id="libelleC" class="column is-half">
+                  <router-link :to="`/Event/${event.id}`" id="lien">
+                    <p id="libelle" class="is-vcentered title is-5">
+                      {{ event.libelle_event }} at
+                      <b>{{ event.libelle_lieu }}</b>
                     </p>
-
                   </router-link>
                 </div>
+
+                <div id="avatar-container">
+                  
+                  <img
+                    id="avatar"
+                    :src="
+                      `https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` +
+                      event.creator.prenom
+                    "
+                    alt="texte a affiché si mon image ne s'affiche pas" title="texte_au_passage_de_la_souris">
+                  <p id="avatar-nom"><strong>{{event.creator.prenom}} {{event.creator.nom}}</strong>
+                  </p>
+                </div>
+                
                 <div class="column">
                   <strong>{{ event.date }}</strong>
                   <p>{{ event.horaire }}</p>
                 </div>
-                <button @click="viens(event.id)">Accept</button>
-                <button @click="viensPas(event.id)">Deny</button>
-              </div>
 
+                <button
+                  class="button is-danger is-light"
+                  @click="viensPas(event.id)"
+                >
+                  Deny
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- CHARGEMENT -->
-      <img
-        v-if="loading"
-        src="../assets/loader.gif"
-        alt="loading"
-      />
+      <img v-if="loading" src="../assets/loader.gif" alt="loading" />
     </div>
   </div>
 </template>
@@ -120,7 +121,30 @@ export default {
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
+#avatar-container{
+position: relative;
+
+  #avatar{
+  height: 100%;
+  width: 100%;
+}
+  #avatar-nom{
+    position: absolute;
+   top: 30%;
+   right: -70px;
+    opacity: 0;
+  }
+  &:hover{
+#avatar-nom{
+  opacity: 1;
+}
+  } 
+}
+
+.is-danger {
+  margin-right: 15px;
+}
 #libelle {
   color: #188fa7;
   text-decoration: none;

@@ -85,8 +85,8 @@ export default {
   components: {},
   data() {
     return {
-      nom: "test",
-      prenom: "null",
+      nom: "",
+      prenom: "",
       sexe: "F",
       password: null,
       mail: null,

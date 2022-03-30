@@ -48,7 +48,7 @@ export default {
         .then((response) => {
           this.$store.commit("setToken", response.data.token);
           this.$store.commit("setAccess_token", response.data.access_token);
-          this.$router.push("/");
+          this.$router.push("/MyEvents");
           // this.error = "success to connect";
         })
         .catch((error) => {

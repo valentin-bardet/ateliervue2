@@ -4,7 +4,7 @@
       <template #brand>
         <b-navbar-item>
           <img
-            src="https://etapes.com/app/uploads/2016/05/1464094938.png"
+            src="https://logodix.com/logo/1260067.png"
             alt="Coop VueJs"
           />
         </b-navbar-item>
@@ -14,12 +14,12 @@
         #start
         v-if="$store.state.token"
       >
-        <b-navbar-item
+        <!-- <b-navbar-item
           tag="router-link"
           :to="{ path: '/' }"
         >
           Home
-        </b-navbar-item>
+        </b-navbar-item> -->
         <b-navbar-item
           tag="router-link"
           :to="{ path: '/MyEvents' }"
@@ -99,7 +99,25 @@
 
 <script>
 export default {
+  watch: {
+    $route() {
+      this.verificationConnexion();
+    },
+  },
+
+  mounted() {
+    this.verificationConnexion();
+  },
   methods: {
+
+    verificationConnexion() {
+      if (this.$route.name == "login") return;
+      if (this.$route.name == "register") return;
+      if (!this.$store.state.token) {
+        this.$router.push("/login");
+      }
+    },
+    
     deconnexion() {
       this.$store.state.token = null;
       this.$router.push("/login");
