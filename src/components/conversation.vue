@@ -129,8 +129,6 @@ export default {
         .post(`Venir/` + this.id + "/?token=" + this.token)
         .then(() => {
           this.load();
-        })
-        .then(() => {
           this.status = true;
         })
         .catch((error) => console.log(error.response.data.message));
@@ -140,8 +138,6 @@ export default {
         .post(`PasVenir/` + this.id + "/?token=" + this.token)
         .then(() => {
           this.load();
-        })
-        .then(() => {
           this.status = false;
         })
         .catch((error) => console.log(error.response.data.message));

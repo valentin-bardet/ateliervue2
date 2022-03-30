@@ -59,6 +59,13 @@ const routes = [{
         }
     },
     {
+        path: '/MyEvents',
+        name: 'MyEvents',
+        component: function() {
+            return import ( /* webpackChunkName: "about" */ '../views/MyEvents.vue')
+        }
+    },
+    {
         path: '/invits',
         name: 'MesInvits',
         component: function() {
@@ -78,7 +85,7 @@ const routes = [{
 
         component: () =>
             import ('../views/Myevent.vue')
-    }, ,
+    },
     {
         path: '/Event/:idevent',
         name: 'Event',
