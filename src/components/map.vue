@@ -1,4 +1,5 @@
 <template>
+<div class="mapContainer">
   <l-map
     :center="center"
     :zoom="zoom"
@@ -18,6 +19,7 @@
     >
     </restaurant>
   </l-map>
+</div>
 </template>
 
 <script>
@@ -87,9 +89,16 @@ export default {
 * {
   margin: 0;
 }
+
+.mapContainer{
+  display: block;
+  width: 20%;
+}
+
+
 #map {
   position: absolute;
-  width: 50vw;
+  width: 46vw;
   height: 50vh;
   overflow: hidden;
 }

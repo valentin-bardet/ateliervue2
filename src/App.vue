@@ -6,30 +6,18 @@
           <img
             src="https://etapes.com/app/uploads/2016/05/1464094938.png"
             alt="Coop VueJs"
-          >
+          />
         </b-navbar-item>
       </template>
       <!--  -->
-      <template
-        #start
-        v-if="$store.state.token"
-      >
-        <b-navbar-item
-          tag="router-link"
-          :to="{ path: '/' }"
-        >
+      <template #start v-if="$store.state.token">
+        <b-navbar-item tag="router-link" :to="{ path: '/' }">
           Home
         </b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          :to="{ path: '/MesEventsCrees' }"
-        >
+        <b-navbar-item tag="router-link" :to="{ path: '/MesEventsCrees' }">
           My events
         </b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          :to="{ path: '/CreateEvent' }"
-        >
+        <b-navbar-item tag="router-link" :to="{ path: '/CreateEvent' }">
           Create events
         </b-navbar-item>
         <b-navbar-item
@@ -41,34 +29,28 @@
       </template>
 
       <template #end>
-        <b-navbar-item
-          tag="router-link"
-          :to="{ path: '/userProfil' }"
-        >
+
+        <b-navbar-item tag="router-link" :to="{ path: '/userProfil' }">
           <div v-if="$store.state.token">
             <b-navbar-item id="avatarC">
               <img
                 id="avatar"
-                :src="`https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` + $store.state.user.prenom +'&size=500'"
+                :src="
+                  `https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` +
+                  $store.state.user.prenom +
+                  '&size=500'
+                "
                 alt="Avatar"
               />
-
             </b-navbar-item>
-
           </div>
-
         </b-navbar-item>
         <b-navbar-item tag="div">
-          <div
-            class="buttons"
-            v-if="!$store.state.token"
-          >
+          <div class="buttons" v-if="!$store.state.token">
             <router-link to="/Register">
-              <b-button
-                id="CreationCompte"
-                type="is-success"
-              >Create an account</b-button>
-
+              <b-button id="CreationCompte" type="is-success"
+                >Create an account</b-button
+              >
             </router-link>
             <router-link to="/Login">
               <b-button type="is-info is-light">Login</b-button>
@@ -80,7 +62,8 @@
               type="is-danger is-light"
               @click="deconnexion"
               class="button is-primary is-black"
-            >Sign out</b-button>
+              >Sign out</b-button
+            >
           </div>
         </b-navbar-item>
       </template>

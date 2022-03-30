@@ -4,27 +4,27 @@
     <div v-if="!AuthError">
       <div v-if="loaded">
         <section>
-          <div id="infos">
-            <h1>{{event.libelle_event}}</h1>
+          <div id="infos" class="box">
+            <h1 class="title is-2">{{event.libelle_event}}</h1>
             <!-- <p><b>Latitude :</b> {{event.lat}}</p> -->
             <!-- <p><b>Longitude:</b> {{event.long}}</p> -->
             <!-- <p><b>Id du createur:</b> {{event.createur_id}}</p> -->
             <p><i class="las la-calendar-alt"></i>{{event.date}} <b>{{event.horaire}}</b></p>
             <p><i class="las la-map-marker-alt"></i> {{event.libelle_lieu}}</p>
           </div>
-          <div id="participants">
+          <div id="participants" class="box">
             <h2><b>Participants</b></h2>
-            <div v-for="user in participants">
+            <div class="part" v-for="user in participants">
               <p>{{user.nom}} {{user.prenom}}</p>
             </div>
-            <button @click="ouvrirInviter">Inviter plus de monde</button>
-            <div v-if="inviter">
-              <article v-for='noninvite in noninvites'>
-                {{noninvite.prenom}} {{noninvite.nom}}<button @click='inviteSomeone(noninvite.id)'>invite</button>
+            <button class="button is-light" @click="ouvrirInviter">Inviter plus de monde</button>
+            <div class="divInvite" v-if="inviter">
+              <article class="invite" v-for='noninvite in noninvites'>
+                {{noninvite.prenom}} {{noninvite.nom}} <button class="button is-light is-small" @click='inviteSomeone(noninvite.id)'>invite</button>
               </article>
 
-              <article v-for='invite in invites.users'>
-                {{invite.prenom}} {{invite.nom}} <button>Deja invite</button>
+              <article class="invite" v-for='invite in invites.users'>
+                {{invite.prenom}} {{invite.nom}}  <button class="button is-warning is-light is-small ">Deja invite</button>
               </article>
               <article v-for='non in refus'>
                 {{non.prenom}} {{non.nom}} <button>Refusé</button>
@@ -33,13 +33,13 @@
             </div>
           </div>
         </section>
-
+        <div id="carte">
         <Map
-          style="max-width=400px"
           :lat="event.lat"
           :long="event.long"
         />
-        <div class="right">
+        </div>
+        <div class="right box message">
           <Conversation :id="event.id" />
 
         </div>
@@ -156,9 +156,60 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+#espace{
+  width: 10px;
+}
+.part{
+}
+
+.divInvite{
+  
+ 
+
+  .nonInvite{
+    p{
+      color: wheat;
+      
+    }
+    color: yellow;
+
+    button{
+     
+    }
+  }
+
+  .invite{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.151);
+    padding-bottom: 3px;
+    margin: 10px;
+    color: blue;
+   
+    text-align: left;
+    margin-left: 16vw;
+    
+    width: 15vw;
+
+    button{
+      
+    }
+  }
+
+  
+}
+#carte{
+  width: 200px;
+}
+
+.message{
+  height: 50vh;
+  width: 45vw;
+}
+
 .right {
   position: absolute;
   right: 0;
+  margin-right: 5vh;
+  margin-left: 5vh;
 }
 .MyEvent {
   padding: 2em;
@@ -166,17 +217,23 @@ export default {
 section {
   display: flex;
   justify-content: center;
+  .box{
+  height: 30vh;
+}
   #infos {
     width: 50vw;
     text-align: left;
     padding-right: 2em;
-    h1 {
-      font-weight: bold;
-      font-size: 1.7em;
-      margin-bottom: 0.6em;
-    }
+        margin-right: 20px;
+
+    
+    // h1 {
+    //   font-weight: bold;
+    //   font-size: 1.7em;
+    //   margin-bottom: 0.6em;
+    // }
     i {
-      font-size: 50px;
+      font-size: 40px;
       padding-right: 0.5em;
     }
     p {
@@ -189,8 +246,37 @@ section {
       }
     }
   }
+
+#participants::-webkit-scrollbar {
+    background-color: #fff;
+    width: 16px;
+}
+
+/* background of the scrollbar except button or resizer */
+#participants::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+/* scrollbar itself */
+#participants::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 4px solid #fff;
+}
+
+/* set button(top and bottom of the scrollbar) */
+#participants::-webkit-scrollbar-button {
+    display:none;
+}
+
   #participants {
     width: 50vw;
+    margin-left: 20px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    
   }
+
+
 }
 </style>

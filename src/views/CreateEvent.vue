@@ -1,78 +1,61 @@
 <template>
-  <div class="CreateEvent">
-    <p>{{AuthError}}</p>
+  <div class="CreateEvent login box column is-half is-offset-one-quarter mt-6">
+    <p>{{ AuthError }}</p>
     <div v-if="!AuthError">
-
-      <h1>Create a new event</h1>
-      <form
-        @submit.prevent="newEvent"
-        v-if="success"
-      >
+      <h1 class="title">Create a new event</h1>
+      <form @submit.prevent="newEvent" v-if="success">
+        <!--  -->
         <div>
-          <label><i class="las la-tag"></i>Nom Event</label>
-          <input
-            type="text"
-            required
-            v-model="libelle_event"
-          >
+          <b-field label="Nom Event :">
+            <b-input type="text" required v-model="libelle_event"> </b-input>
+          </b-field>
         </div>
+        <!--  -->
         <div id="app-autocomplete-here">
           <label><i class="las la-map-marker-alt"></i></label>
-          <input
+          <input class="input"
             type="text"
             v-model="libelle_lieu"
             placeholder="Adress"
             v-on:keyup="onKeypressCity($event)"
             v-on:keydown="onKeypressCity($event)"
-          >
+          />
           <!-- LISTING : SUGGESTIONS HERE -->
           <div
             class="autocomplete-here-suggestions-container"
             v-if="suggestionsHere.length > 0"
           >
-            <ul>
-              <li v-for="suggestion in suggestionsHere">
-                <span v-on:click="onClickSuggestHere(suggestion)">{{ suggestion.lib }}</span>
+            <ul id="listSug">
+              <li  v-for="suggestion in suggestionsHere">
+                <span v-on:click="onClickSuggestHere(suggestion)">{{
+                  suggestion.lib
+                }}</span>
               </li>
             </ul>
           </div>
-
         </div>
+        <!--  -->
         <div>
           <label><i class="las la-clock"></i></label>
-          <input
-            type="time"
-            required
-            v-model="horaire"
-          >
+          <input class="input" type="time" required v-model="horaire" />
         </div>
+        <!--  -->
         <div>
           <label><i class="las la-calendar-alt"></i></label>
-          <input
-            type="date"
-            required
-            v-model="date"
-          >
+          <input class="input" type="date" required v-model="date" />
         </div>
+        <!--  -->
 
-        <div>
-          <button>
-            <h3>
-              Valider
-            </h3>
+        <div >
+          <button id="valider" class="button is-primary">
+            <h3>Valider</h3>
           </button>
         </div>
-        <p>{{error}}</p>
-
+        <p>{{ error }}</p>
       </form>
 
-      <img
-        v-if="loading"
-        src="../assets/loader.gif"
-        alt="loading"
-      >
+      <img v-if="loading" src="../assets/loader.gif" alt="loading" />
     </div>
-
   </div>
 </template>
 <script>
@@ -199,4 +182,35 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#valider{
+  background-color: #48C78E;
+  margin-top: 5%;
+}
+
+#listSug{
+  background-color: #e6e9f72c;
+  border-radius: 0 0 10px 10px;
+}
+
+li{
+  padding: 3px 0 3px 0 ;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.151);
+}
+
+li:hover{
+  background-color: #48c78e63;
+}
+
+li:last-of-type{
+  border-radius: 0 0 10px 10px;
+}
+</style>
 
