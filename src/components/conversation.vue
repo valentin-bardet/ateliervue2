@@ -1,22 +1,24 @@
 <template>
   <div class="conversation">
-  
-    <!-- <h1>Messages</h1> -->
+
     <img
       v-if="
         loading"
       src="../assets/loader.gif"
       alt="loading"
     >
-    <div id="load" v-if="!loading">
+    <div
+      id="load"
+      v-if="!loading"
+    >
       <div class="scroll">
-      <div
-        class="message"
-        v-for="conv in conversation"
-      >
-        <h3>{{conv.user.prenom}} {{conv.user.nom}} : </h3>
-        <p>{{conv.message}}</p>
-      </div>
+        <div
+          class="message"
+          v-for="conv in conversation"
+        >
+          <h3>{{conv.user.prenom}} {{conv.user.nom}} : </h3>
+          <p>{{conv.message}}</p>
+        </div>
       </div>
       <form @submit.prevent="send">
         <div>
@@ -91,24 +93,6 @@ export default {
           )
         );
       this.$apiWeb
-        .get(`getStatus/` + this.id + "/?token=" + this.token)
-        .then((response) => {
-          if (response.data == "oui") {
-            this.status = true;
-          }
-          if (response.data == "non") {
-            this.status = false;
-          }
-          if (response.data == "rien") {
-            this.status = null;
-          }
-        })
-        .catch(
-          (error) => (
-            (this.loading = false), console.log(error.response.data.message)
-          )
-        );
-      this.$apiWeb
         .get(`getRole/` + this.id + "/?token=" + this.token)
         .then((response) => {
           if (response.data.role == "proprietaire") {
@@ -143,8 +127,10 @@ export default {
     viens() {
       this.$apiWeb
         .post(`Venir/` + this.id + "/?token=" + this.token)
-        .then((response) => {
+        .then(() => {
           this.load();
+        })
+        .then(() => {
           this.status = true;
         })
         .catch((error) => console.log(error.response.data.message));
@@ -152,15 +138,38 @@ export default {
     viensPas() {
       this.$apiWeb
         .post(`PasVenir/` + this.id + "/?token=" + this.token)
-        .then((response) => {
+        .then(() => {
           this.load();
+        })
+        .then(() => {
           this.status = false;
         })
         .catch((error) => console.log(error.response.data.message));
     },
+    getStatus() {
+      this.$apiWeb
+        .get(`getStatus/` + this.id + "/?token=" + this.token)
+        .then((response) => {
+          if (response.data == "oui") {
+            this.status = true;
+          }
+          if (response.data == "non") {
+            this.status = false;
+          }
+          if (response.data == "rien") {
+            this.status = null;
+          }
+        })
+        .catch(
+          (error) => (
+            (this.loading = false), console.log(error.response.data.message)
+          )
+        );
+    },
   },
   created: function () {
     this.load();
+    this.getStatus();
   },
 };
 </script>
@@ -168,10 +177,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
+.scroll {
 
-
-.scroll{
-  min-height: 35vh;
   max-height: 35vh;
   padding-right: 20px;
   overflow-y: scroll;
@@ -179,30 +186,14 @@ export default {
   
 }
 
-body::-webkit-scrollbar-track {
-    background-color: #fff;
-}
 
-/* scrollbar itself */
-body::-webkit-scrollbar-thumb {
-    background-color: #babac0;
-    border-radius: 16px;
-    border: 4px solid #fff;
-}
-
-/* set button(top and bottom of the scrollbar) */
-body::-webkit-scrollbar-button {
-    display:none;
-}
 
 .conversation {
-  
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   .message {
-    
     display: flex;
     justify-content: space-between;
     h3 {

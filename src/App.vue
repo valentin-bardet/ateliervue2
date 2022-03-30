@@ -20,9 +20,16 @@
         <b-navbar-item tag="router-link" :to="{ path: '/CreateEvent' }">
           Create events
         </b-navbar-item>
+        <b-navbar-item
+          tag="router-link"
+          :to="{ path: '/invits' }"
+        >
+          Invitations
+        </b-navbar-item>
       </template>
 
       <template #end>
+
         <b-navbar-item tag="router-link" :to="{ path: '/userProfil' }">
           <div v-if="$store.state.token">
             <b-navbar-item id="avatarC">
