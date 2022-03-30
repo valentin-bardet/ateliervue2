@@ -3,17 +3,25 @@
     <p>{{ AuthError }}</p>
     <div v-if="!AuthError">
       <h1 class="title">Create a new event</h1>
-      <form @submit.prevent="newEvent" v-if="success">
+      <form
+        @submit.prevent="newEvent"
+        v-if="success"
+      >
         <!--  -->
         <div>
           <b-field label="Nom Event :">
-            <b-input type="text" required v-model="libelle_event"> </b-input>
+            <b-input
+              type="text"
+              required
+              v-model="libelle_event"
+            > </b-input>
           </b-field>
         </div>
         <!--  -->
         <div id="app-autocomplete-here">
           <label><i class="las la-map-marker-alt"></i></label>
-          <input class="input"
+          <input
+            class="input"
             type="text"
             v-model="libelle_lieu"
             placeholder="Adress"
@@ -26,7 +34,7 @@
             v-if="suggestionsHere.length > 0"
           >
             <ul id="listSug">
-              <li  v-for="suggestion in suggestionsHere">
+              <li v-for="suggestion in suggestionsHere">
                 <span v-on:click="onClickSuggestHere(suggestion)">{{
                   suggestion.lib
                 }}</span>
@@ -37,24 +45,41 @@
         <!--  -->
         <div>
           <label><i class="las la-clock"></i></label>
-          <input class="input" type="time" required v-model="horaire" />
+          <input
+            class="input"
+            type="time"
+            required
+            v-model="horaire"
+          />
         </div>
         <!--  -->
         <div>
           <label><i class="las la-calendar-alt"></i></label>
-          <input class="input" type="date" required v-model="date" />
+          <input
+            class="input"
+            type="date"
+            required
+            v-model="date"
+          />
         </div>
         <!--  -->
 
-        <div >
-          <button id="valider" class="button is-primary">
+        <div>
+          <button
+            id="valider"
+            class="button is-primary"
+          >
             <h3>Valider</h3>
           </button>
         </div>
         <p>{{ error }}</p>
       </form>
 
-      <img v-if="loading" src="../assets/loader.gif" alt="loading" />
+      <img
+        v-if="loading"
+        src="../assets/loader.gif"
+        alt="loading"
+      />
     </div>
   </div>
 </template>
@@ -189,27 +214,27 @@ h1 {
   margin-bottom: 30px;
 }
 
-#valider{
-  background-color: #48C78E;
+#valider {
+  background-color: #48c78e;
   margin-top: 5%;
 }
 
-#listSug{
+#listSug {
   background-color: #e6e9f72c;
   border-radius: 0 0 10px 10px;
 }
 
-li{
-  padding: 3px 0 3px 0 ;
+li {
+  padding: 3px 0 3px 0;
   cursor: pointer;
   border-bottom: 1px solid rgba(0, 0, 0, 0.151);
 }
 
-li:hover{
+li:hover {
   background-color: #48c78e63;
 }
 
-li:last-of-type{
+li:last-of-type {
   border-radius: 0 0 10px 10px;
 }
 </style>

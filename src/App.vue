@@ -109,15 +109,14 @@ export default {
     this.verificationConnexion();
   },
   methods: {
-
     verificationConnexion() {
       if (this.$route.name == "login") return;
-      if (this.$route.name == "register") return;
+      if (this.$route.name == "Register") return;
       if (!this.$store.state.token) {
         this.$router.push("/login");
       }
     },
-    
+
     deconnexion() {
       this.$store.state.token = null;
       this.$router.push("/login");
