@@ -164,7 +164,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .conversation {
-  width: 50vw;
   display: flex;
   justify-content: center;
   align-items: center;
