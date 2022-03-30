@@ -32,18 +32,30 @@
         >
           Create events
         </b-navbar-item>
+        <b-navbar-item
+          tag="router-link"
+          :to="{ path: '/invits' }"
+        >
+          Invitations
+        </b-navbar-item>
       </template>
 
-      <template #end >
-        <b-navbar-item tag="router-link" :to="{ path: '/userProfil' }">
-        <div v-if="$store.state.token">
-          <b-navbar-item id="avatarC" >
-            <img
-               id="avatar" :src="`https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` + $store.state.user.prenom +'&size=500'" alt="Avatar"/>
-              
-        </b-navbar-item>
-          
-        </div>
+      <template #end>
+        <b-navbar-item
+          tag="router-link"
+          :to="{ path: '/userProfil' }"
+        >
+          <div v-if="$store.state.token">
+            <b-navbar-item id="avatarC">
+              <img
+                id="avatar"
+                :src="`https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` + $store.state.user.prenom +'&size=500'"
+                alt="Avatar"
+              />
+
+            </b-navbar-item>
+
+          </div>
 
         </b-navbar-item>
         <b-navbar-item tag="div">
@@ -81,9 +93,7 @@
 <script>
 export default {
   methods: {
-
-    deconnexion(){
-
+    deconnexion() {
       this.$store.state.token = null;
       this.$router.push("/login");
     },
@@ -92,20 +102,16 @@ export default {
 </script>
 
 <style lang="scss">
-
-#avatarC{
-  
+#avatarC {
   width: 100px;
   height: 50px;
 }
-#avatar{
-  
+#avatar {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
-#CreationCompte{
-
+#CreationCompte {
   margin-right: 30px;
 }
 
