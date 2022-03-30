@@ -1,38 +1,57 @@
 <template>
-<div class="userProfil">
-    <p>{{AuthError}}</p>
+  <div class="userProfil">
+    <p>{{ AuthError }}</p>
     <div v-if="!AuthError">
-    <div>
-        
-<img
-               id="avatar" :src="`https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` + $store.state.user.prenom" alt="Avatar"/>    </div>
-    
-<form @submit.prevent="editinfo(user.id, user.mail, user.prenom,user.nom)" class="columns is-multiline">
+      <div>
+        <img
+          id="avatar"
+          :src="
+            `https://eu.ui-avatars.com/api/background=random&background=random&rounded=true&name=` +
+            $store.state.user.prenom
+          "
+          alt="Avatar"
+        />
+      </div>
 
-      <b-field horizontal label="mail" class="column is-4 is-offset-4 mb-1 p-1">
-        <b-input type="mail" v-model="user.mail" autofocus>
-        </b-input>
-      </b-field>
+      <form
+        @submit.prevent="editinfo()"
+        class="columns is-multiline"
+      >
+        <b-field
+          horizontal
+          label="mail"
+          class="column is-4 is-offset-4 mb-1 p-1"
+        >
+          <b-input type="mail" v-model="user.mail" autofocus> </b-input>
+        </b-field>
 
-     <b-field horizontal label="prenom" class="column is-4 is-offset-4 mb-1 p-1">
-        <b-input type="text" v-model="user.prenom" autofocus>
-        </b-input>
-      </b-field>
+        <b-field
+          horizontal
+          label="prenom"
+          class="column is-4 is-offset-4 mb-1 p-1"
+        >
+          <b-input type="text" v-model="user.prenom" autofocus> </b-input>
+        </b-field>
 
-      <b-field horizontal label="nom" class="column is-4 is-offset-4 mb-1 p-1">
-        <b-input type="text" v-model="user.nom" autofocus>
-        </b-input>
+        <b-field
+          horizontal
+          label="nom"
+          class="column is-4 is-offset-4 mb-1 p-1"
+        >
+          <b-input type="text" v-model="user.nom" autofocus> </b-input>
 
-         <button id="check" class="button"><i class="fas fa-check " style="color:#3EC487"></i></button>
-      </b-field>
-     
-    </form>
+          <button id="check" class="button">
+            <i class="fas fa-check" style="color: #3ec487"></i>
+          </button>
+        </b-field>
+      </form>
 
-     <button id="bin" class="button" @click="deleteUser()"><p id="Pdelete">Delete account</p><i class="fa-solid fa-trash-can" style="color:red"></i></button>
-
-     
-</div>
-</div>
+      <button id="bin" class="button" @click="deleteUser()">
+        <p id="Pdelete">Delete account</p>
+        <i class="fa-solid fa-trash-can" style="color: red"></i>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -42,15 +61,17 @@ export default {
   data() {
     return {
       AuthError: null,
-      user: [],
+      user: this.$store.state.user,
       token: this.$store.state.token,
       access_token: this.$store.state.access_token,
       loading: false,
       editingConv: false,
+      prenom:this.$store.state.user.prenom,
+      nom:this.$store.state.user.nom,
+      mail:this.$store.state.user.mail,
     };
   },
   methods: {
-    
     checkAuth() {
       this.$apiAuth
         .get("check", {
@@ -66,33 +87,32 @@ export default {
         .catch((error) => (this.AuthError = error.response.data.message));
     },
 
-    lo(){
-        this.$store.state.token = null;
-        this.$router.push("/login");
+    lo() {
+      this.$store.state.token = null;
+      this.$router.push("/login");
     },
 
-      deleteUser(){
-        this.$buefy.dialog.confirm({
-            type: 'is-danger',
-            cancelText: 'Annuler',
-            confirmText: 'Accepter',
-            message: `<strong>Delete your account ?</strong>`,
-            onConfirm: () => {
-            this.$apiWeb.delete(`userSupp/?token=` + this.token).then(response => {
-                this.$store.state.token = null;
-                this.$router.push("/login");
-                this.$buefy.toast.open('Account delete')
-                this.$apiWeb.get('channels').then(response => {
-                this.convs = response.data
-            //     this.$store.state.token = null;
-            // this.$router.push("/login");
-                
-            })
-            
-          })
+    deleteUser() {
+      this.$buefy.dialog.confirm({
+        type: "is-danger",
+        cancelText: "Annuler",
+        confirmText: "Accepter",
+        message: `<strong>Delete your account ?</strong>`,
+        onConfirm: () => {
+          this.$apiWeb
+            .delete(`userSupp/?token=` + this.token)
+            .then((response) => {
+              this.$store.state.token = null;
+              this.$router.push("/login");
+              this.$buefy.toast.open("Account delete");
+              this.$apiWeb.get("channels").then((response) => {
+                this.convs = response.data;
+                //     this.$store.state.token = null;
+                // this.$router.push("/login");
+              });
+            });
         },
-            
-      })
+      });
     },
 
     UpdateState() {
@@ -101,31 +121,57 @@ export default {
         .catch((error) => console.log(error.response.data.message));
     },
 
-       editinfo(id, mail, prenom, nom){
-      if (!nom) {
-        this.$buefy.toast.open("Renseigner un nom !")
-      } else if (!prenom) {
-        this.$buefy.toast.open("Renseigner un prenom !")
-      } else if (!nom) {
-        this.$buefy.toast.open("Renseigner un nom !")
+    editinfo() {
+      if (!this.user.nom) {
+        this.$buefy.toast.open("Renseigner un nom !");
+      } else if (!this.user.prenom) {
+        this.$buefy.toast.open("Renseigner un prenom !");
+      } else if (!this.user.nom) {
+        this.$buefy.toast.open("Renseigner un nom !");
       } else {
-        let donnees = {
-          mail: mail,
-          prenom: prenom,
-          nom: nom,
+        
+        if (this.user.mail == this.mail) {
+          this.$apiWeb
+            .post(
+              `updateUser/?token=` +
+                this.token +
+                "&nom=" +
+                this.user.nom +
+                "&prenom=" +
+                this.user.prenom
+            )
+            .then((response) => {
+              this.$store.state.token = null;
+              this.$router.push("/login");
+              this.$store.commit("setUser", response.data);
+              
+              this.$buefy.toast.open("USer modif");
+              
+            });
+        } else {
+          this.$apiWeb
+            .post(
+              `updateUser/?token=` +
+                this.token +
+                "&nom=" +
+                this.user.nom +
+                "&mail=" +
+                this.user.mail +
+                "&prenom=" +
+                this.user.prenom
+            )
+            .then((response) => {
+              this.$store.state.token = null;
+              this.$router.push("/login");
+              this.$store.commit("setUser", response.data);
+              // console.log(response.data);
+              this.$buefy.toast.open("USer modif");
+             
+            });
         }
-        this.$apiWeb.post(`updateUser/?token=` + this.token +'&nom='+donnees.nom +'&mail='+donnees.mail+'&prenom='+donnees.prenom).then(response => {
-            this.$store.commit("setToken", response.data.user);
-            this.$store.commit("setAccess_token", response.data.user);
-            this.$buefy.toast.open("Conversation modifié")
-            this.editingConv = false
-          
-        })
       }
     },
   },
-
-
 
   created() {
     this.checkAuth();
@@ -134,8 +180,8 @@ export default {
 </script>
 
 <style scoped>
-#Pdelete{
-    margin-right: 10%;
+#Pdelete {
+  margin-right: 10%;
 }
 #avatar {
   width: 150px;
@@ -143,7 +189,7 @@ export default {
   margin-bottom: 30px;
 }
 
-#check{
-    border: 1px solid #3EC487;
+#check {
+  border: 1px solid #3ec487;
 }
 </style>
