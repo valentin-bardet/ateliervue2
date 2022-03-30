@@ -1,5 +1,6 @@
 <template>
   <div class="conversation">
+  
     <h1>Messages</h1>
     <img
       v-if="
@@ -7,13 +8,15 @@
       src="../assets/loader.gif"
       alt="loading"
     >
-    <div v-if="!loading">
+    <div id="load" v-if="!loading">
+      <div class="scroll">
       <div
         class="message"
         v-for="conv in conversation"
       >
         <h3>{{conv.user.prenom}} {{conv.user.nom}} : </h3>
         <p>{{conv.message}}</p>
+      </div>
       </div>
       <form @submit.prevent="send">
         <div>
@@ -163,12 +166,41 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+
+
+.scroll{
+  max-height: 35vh;
+  padding-right: 20px;
+  overflow-y: scroll;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.conversation::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+/* scrollbar itself */
+.conversation::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 4px solid #fff;
+}
+
+/* set button(top and bottom of the scrollbar) */
+.conversation::-webkit-scrollbar-button {
+    display:none;
+}
+
 .conversation {
+  
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   .message {
+    
     display: flex;
     justify-content: space-between;
     h3 {
