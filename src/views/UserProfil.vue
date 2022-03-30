@@ -12,8 +12,19 @@
           alt="Avatar"
         />
       </div>
+      <button id="editButton" @click="edit">
+        <i v-if="isEditing" class="fa-2x fas fa-arrow-left"></i>
+        <i v-else class="fa-2x fa-solid fa-sliders"></i>
+      </button>
 
+      <div id="info" v-if="!isEditing">
+        <p><strong>Mail : </strong>{{ user.mail }}</p>
+        <p><strong>Firstname : </strong>{{ user.prenom }}</p>
+        <p><strong>Name : </strong>{{ user.nom }}</p>
+        <!-- <p><strong>Password : </strong>{{ user.password }}</p> -->
+      </div>
       <form
+        v-if="isEditing"
         @submit.prevent="editinfo()"
         class="columns is-multiline"
       >
@@ -39,11 +50,21 @@
           class="column is-4 is-offset-4 mb-1 p-1"
         >
           <b-input type="text" v-model="user.nom" autofocus> </b-input>
-
           <button id="check" class="button">
             <i class="fas fa-check" style="color: #3ec487"></i>
           </button>
         </b-field>
+
+        <!-- <b-field
+          horizontal
+          label="password"
+          class="column is-4 is-offset-4 mb-1 p-1"
+        >
+          <b-input type="password" v-model="user.password" autofocus> </b-input>
+          <button id="check" class="button">
+            <i class="fas fa-check" style="color: #3ec487"></i>
+          </button>
+        </b-field> -->
       </form>
 
       <button id="bin" class="button" @click="deleteUser()">
@@ -66,12 +87,17 @@ export default {
       access_token: this.$store.state.access_token,
       loading: false,
       editingConv: false,
-      prenom:this.$store.state.user.prenom,
-      nom:this.$store.state.user.nom,
-      mail:this.$store.state.user.mail,
+      prenom: this.$store.state.user.prenom,
+      nom: this.$store.state.user.nom,
+      mail: this.$store.state.user.mail,
+      password: null,
+      isEditing: false,
     };
   },
   methods: {
+    edit() {
+      this.isEditing = !this.isEditing;
+    },
     checkAuth() {
       this.$apiAuth
         .get("check", {
@@ -128,8 +154,9 @@ export default {
         this.$buefy.toast.open("Renseigner un prenom !");
       } else if (!this.user.nom) {
         this.$buefy.toast.open("Renseigner un nom !");
-      } else {
-        
+      }
+      //password
+      if (this.password == null) {
         if (this.user.mail == this.mail) {
           this.$apiWeb
             .post(
@@ -144,9 +171,8 @@ export default {
               this.$store.state.token = null;
               this.$router.push("/login");
               this.$store.commit("setUser", response.data);
-              
+
               this.$buefy.toast.open("USer modif");
-              
             });
         } else {
           this.$apiWeb
@@ -166,10 +192,56 @@ export default {
               this.$store.commit("setUser", response.data);
               // console.log(response.data);
               this.$buefy.toast.open("USer modif");
-             
             });
         }
       }
+      if (this.password != null) {
+        if (this.user.mail == this.mail) {
+          this.$apiWeb
+            .post(
+              `updateUser/?token=` +
+                this.token +
+                "&nom=" +
+                this.user.nom +
+                "&prenom=" +
+                this.user.prenom +
+                "&prenom=" +
+                this.password
+            )
+            .then((response) => {
+              this.$store.state.token = null;
+              this.$router.push("/login");
+              this.$store.commit("setUser", response.data);
+
+              this.$buefy.toast.open("USer modif");
+            });
+        } else {
+          this.$apiWeb
+            .post(
+              `updateUser/?token=` +
+                this.token +
+                "&nom=" +
+                this.user.nom +
+                "&mail=" +
+                this.user.mail +
+                "&prenom=" +
+                this.user.prenom +
+                "&prenom=" +
+                this.password
+            )
+            .then((response) => {
+              this.$store.state.token = null;
+              this.$router.push("/login");
+              this.$store.commit("setUser", response.data);
+              // console.log(response.data);
+              this.$buefy.toast.open("USer modif");
+            });
+        }
+      }
+      //Fin password
+      // MAIL
+
+      // FIN MAIL
     },
   },
 
@@ -180,6 +252,18 @@ export default {
 </script>
 
 <style scoped>
+#info {
+  width: 13vw;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  margin-bottom: 20px;
+}
+#editButton {
+  margin-left: 50vw;
+  border: none;
+  background: none;
+}
 #Pdelete {
   margin-right: 10%;
 }

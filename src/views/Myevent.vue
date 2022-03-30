@@ -39,7 +39,7 @@
           :long="event.long"
         />
         </div>
-        <div class="right box message">
+        <div class="box conv">
           <Conversation :id="event.id" />
 
         </div>
@@ -156,6 +156,11 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
+.conv{
+  width: 46vw;
+  margin-left: 49vw;
+}
 #espace{
   width: 10px;
 }
@@ -219,6 +224,7 @@ section {
   justify-content: center;
   .box{
   height: 30vh;
+  
 }
   #infos {
     width: 50vw;

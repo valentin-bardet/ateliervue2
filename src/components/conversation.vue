@@ -1,7 +1,7 @@
 <template>
   <div class="conversation">
   
-    <h1>Messages</h1>
+    <!-- <h1>Messages</h1> -->
     <img
       v-if="
         loading"
@@ -21,12 +21,13 @@
       <form @submit.prevent="send">
         <div>
           <input
+          class="input is-link is-small"
             type="texte"
             required
             v-model="mess"
           >
 
-          <button>
+          <button class="button is-info is-light">
             <h3>
               Envoyer
             </h3>
@@ -170,26 +171,27 @@ export default {
 
 
 .scroll{
+  min-height: 35vh;
   max-height: 35vh;
   padding-right: 20px;
   overflow-y: scroll;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  
+  
 }
 
-.conversation::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track {
     background-color: #fff;
 }
 
 /* scrollbar itself */
-.conversation::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
     background-color: #babac0;
     border-radius: 16px;
     border: 4px solid #fff;
 }
 
 /* set button(top and bottom of the scrollbar) */
-.conversation::-webkit-scrollbar-button {
+body::-webkit-scrollbar-button {
     display:none;
 }
 
