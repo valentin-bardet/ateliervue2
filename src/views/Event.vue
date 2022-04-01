@@ -184,18 +184,22 @@ export default {
   }
 }
 #carte {
-  width: 200px;
+      width: 45vw;
+      margin-left: 3%;
 }
 
 .message {
   height: 50vh;
-  width: 45vw;
+      width: 45vw;
+
+    background-color: #fff;
+
 }
 
 .right {
   position: absolute;
   right: 0;
-  margin-right: 5vh;
+  margin-right: 6vh;
   margin-left: 5vh;
 }
 .MyEvent {
@@ -208,7 +212,7 @@ section {
     height: 30vh;
   }
   #infos {
-    width: 50vw;
+    width: 45vw;
     text-align: left;
     padding-right: 2em;
     margin-right: 20px;
@@ -256,7 +260,7 @@ section {
   }
 
   #participants {
-    width: 50vw;
+    width: 45vw;
     margin-left: 20px;
     overflow-y: scroll;
     scrollbar-width: thin;

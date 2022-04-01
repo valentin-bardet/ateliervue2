@@ -17,7 +17,7 @@
           v-for="conv in conversation"
         >
           <h3>{{conv.user.prenom}} {{conv.user.nom}} : </h3>
-          <p>{{conv.message}}</p>
+          <p id="messageText">{{conv.message}}</p>
         </div>
       </div>
       <form @submit.prevent="send">
@@ -29,16 +29,14 @@
             v-model="mess"
           >
 
-          <button class="button is-info is-light">
-            <h3>
+          <button class="envoie button is-info is-light">
               Envoyer
-            </h3>
           </button>
         </div>
         <p>{{errorForm}}</p>
       </form>
       <div v-if="!proprietaire">
-        <button
+        <button class="jeViens button is-success is-light"
           v-if="status == null || !status"
           @click="viens"
         >
@@ -46,13 +44,14 @@
             Je viens
           </h3>
         </button>
-        <button
+        <button 
           v-if="status == null || status"
           @click="viensPas"
+          class="VienPas button  is-danger is-light"
         >
-          <h3>
+          
             Je ne viens pas
-          </h3>
+          
         </button>
       </div>
       <p>{{error}}</p>
@@ -173,11 +172,72 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
+form{
+  input{
+    position: absolute;
+    bottom: 5%;
+    left: 25%;
+    right: 25%;
+    width: 50%;
+    height: 9%;
+  }
+}
+
+ .envoie{
+
+    position: absolute;
+    height: 9%;
+    bottom: 5%;
+    right: 2%;
+    width: 20%;
+  }
+
+  .VienPas{
+    position: absolute;
+    height: 9%;
+    bottom: 5%;
+    left: 2%;
+    width: 20%;
+  }
+
+  .jeViens{
+    position: absolute;
+    height: 9%;
+    bottom: 17%;
+    left: 2%;
+    width: 20%;
+  }
+
+
 .scroll {
+  
 
   max-height: 35vh;
   padding-right: 20px;
   overflow-y: scroll;
+  word-wrap: break-word;
+
+  &::-webkit-scrollbar {
+    background-color: #fff;
+    width: 10px;
+}
+
+/* background of the scrollbar except button or resizer */
+&::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+/* scrollbar itself */
+&::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 1px solid #fff;
+}
+
+/* set button(top and bottom of the scrollbar) */
+&::-webkit-scrollbar-button {
+    display:none;
+}
   
   
 }
@@ -185,15 +245,26 @@ export default {
 
 
 .conversation {
+    background-color: #fff;
+
+  word-wrap: break-word;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   .message {
+    word-wrap: break-word;
+      background-color: #fff;
+
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    background-color: #fff;
     h3 {
       font-weight: bold;
+    }
+    p{
+word-wrap: break-word;
     }
   }
 }

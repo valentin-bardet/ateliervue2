@@ -3,7 +3,7 @@
     <p>{{ AuthError }}</p>
     <div v-if="!AuthError">
       <h1 class="title">Yours created events</h1>
-      <div v-if="loaded">
+      <div id="events-container" v-if="loaded">
         <div v-for="event in events">
           <div class="container is-vcentered ">
             <div id="info-container" class="notification is-white is-vcentered ">
@@ -123,6 +123,10 @@ export default {
 
 
 <style scoped>
+#events-container{
+  margin-bottom: 2%;
+
+}
 
 #libelle {
   color: #188fa7;

@@ -3,9 +3,9 @@
     <p>{{ AuthError }}</p>
     <div v-if="!AuthError">
       <h1 class="title">Your events</h1>
-      <div v-if="loaded">
-        <div v-for="event in events">
-          <div class="container is-vcentered">
+      <div id="events-container" v-if="loaded">
+        <div  v-for="event in events">
+          <div  class="container is-vcentered">
             <div id="info-container" class="notification is-white is-vcentered">
               <div class="columns is-vcentered efefefefef">
                 <div id="libelleC" class="column is-half">
@@ -122,6 +122,10 @@ export default {
 
 
 <style scoped lang="scss">
+#events-container{
+  margin-bottom: 2%;
+
+}
 #avatar-container{
 position: relative;
 

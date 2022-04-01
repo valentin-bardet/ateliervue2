@@ -3,7 +3,7 @@
     <p>{{ AuthError }}</p>
     <div v-if="!AuthError">
       <h1 class="title">Your invitations to events</h1>
-      <div v-if="loaded">
+      <div id="events-container" v-if="loaded">
         <div v-for="event in events">
           <p><b>Invited by {{ event.creator.prenom }} {{ event.creator.nom }}</b></p>
           <div class="container is-vcentered ">
@@ -122,6 +122,10 @@ export default {
 
 <style scoped>
 
+#events-container{
+  margin-bottom: 2%;
+
+}
 .is-danger{
   margin-left: 15px;
 }

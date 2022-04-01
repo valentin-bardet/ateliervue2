@@ -98,7 +98,7 @@ export default {
 
 #map {
   position: absolute;
-  width: 46vw;
+      width: 45vw;
   height: 50vh;
   overflow: hidden;
 }
