@@ -27,7 +27,7 @@
                 {{invite.prenom}} {{invite.nom}}  <button class="button is-warning is-light is-small ">Deja invite</button>
               </article>
               <article v-for='non in refus'>
-                {{non.prenom}} {{non.nom}} <button>Refusé</button>
+                {{non.prenom}} {{non.nom}} <button class="button is-danger is-light is-small ">Refusé</button>
               </article>
 
             </div>
@@ -39,7 +39,7 @@
           :long="event.long"
         />
         </div>
-        <div class="box conv">
+       <div class="right box message">
           <Conversation :id="event.id" />
 
         </div>
@@ -156,7 +156,12 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
+.right {
+  position: absolute;
+  right: 0;
+  margin-right: 5vh;
+  margin-left: 5vh;
+}
 .conv{
   width: 46vw;
   margin-left: 49vw;
@@ -205,27 +210,35 @@ export default {
   width: 200px;
 }
 
-.message{
+
+// .right {
+//   position: absolute;
+//   right: 0;
+//   margin-right: 5vh;
+//   margin-left: 5vh;
+// }
+
+.message {
   height: 50vh;
   width: 45vw;
-}
+    background-color: #fff;
 
-.right {
-  position: absolute;
-  right: 0;
-  margin-right: 5vh;
-  margin-left: 5vh;
 }
 .MyEvent {
+  margin-top: 1%;
   padding: 2em;
+  
+
 }
 section {
   display: flex;
   justify-content: center;
   .box{
   height: 30vh;
+  }
   
-}
+
+
   #infos {
     width: 50vw;
     text-align: left;
